@@ -4,17 +4,17 @@
 # dimensão: 4
 # central
 # central
-""" Automatic QRCODE."""
+""" AutomGenerate Qrcode form website."""
 import time
-from selenium import webself.driver
-from selenium.webself.driver.common.by import By
-from selenium import webself.driver
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
-from selenium.webself.driver.chrome.options import Options
-from selenium.webself.driver.common.by import By
-from selenium.webself.driver.firefox.options import Options as FireFoxoptions
-from selenium.webself.driver.support import expected_conditions as EC
-from selenium.webself.driver.support.ui import Webself.driverWait
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.options import Options as FireFoxoptions
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 class GenerateQR():
@@ -22,27 +22,25 @@ class GenerateQR():
         "url": "https://qr.ioi.tw/pt/",
     }
 
-    def __init__(self, headless=False, browser='Chrome'):  # em producao TRUE
+    def __init__(self, headless=True, browser='Chrome'):  # em producao TRUE
 
-        # self.self.driver = webself.driver.PhantomJS(executable_path="../bin/phantomjs")
+        # self.driver = webdriver.PhantomJS(executable_path="../bin/phantomjs")
 
         if browser == 'Chrome':
             options = Options()
             if headless:
                 options.add_argument('--headless')
-            self.self.driver = webself.driver.Chrome(
-                executable_path="bin/chromeself.driver", chrome_options=options)
+            self.driver = webdriver.Chrome(
+                executable_path="bin/chromedriver", chrome_options=options)
         else:
             if browser == 'Firefox':
                 options = FireFoxoptions()
                 if headless:
                     options.add_argument('-headless')
-                self.self.driver = webself.driver.Firefox(
-                    executable_path="bin/geckoself.driver", firefox_options=options)
+                self.driver = webdriver.Firefox(
+                    executable_path="bin/geckodriver", firefox_options=options)
 
-        # self.driver = webself.driver.Chrome('./chromeself.driver')  # Optional argument, if not specified will search path.
-
-        # self.driver.get(url)
+    def main(self):
         time.sleep(5)  # Let the user actually see something!
         raw = self.driver.find_element_by_xpath(
             '/html/body/div[2]/div/div[1]/ul/li[8]/a')
