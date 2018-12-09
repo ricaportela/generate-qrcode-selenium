@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "/home/ricardo/sprint/testes-flask/.venv/bin/python"
+    "python.pythonPath": "/home/ricardo/.pyenv/versions/3.7.1/bin/python",
+    "python.linting.pylintEnabled": true
 }

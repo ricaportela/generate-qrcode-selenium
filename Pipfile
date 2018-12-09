@@ -7,11 +7,14 @@ verify_ssl = true
 ipython = "*"
 pylint = "*"
 jupyter = "*"
+tox = "*"
+coverage = "*"
+pylava = "*"
 
 [packages]
 selenium = "*"
 requests = "*"
-jupyter = "*"
+pylava = "*"
 
 [requires]
 python_version = "3.7"
