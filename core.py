@@ -6,3 +6,4 @@ from app.generate_qr import GenerateQR
 
 if __name__ == "__main__":
     qr = GenerateQR()
+    qr.main()

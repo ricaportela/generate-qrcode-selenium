@@ -10,6 +10,7 @@ jupyter = "*"
 tox = "*"
 coverage = "*"
 pylava = "*"
+autopep8 = "*"
 
 [packages]
 selenium = "*"
