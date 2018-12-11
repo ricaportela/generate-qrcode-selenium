@@ -11,11 +11,13 @@ tox = "*"
 coverage = "*"
 pylava = "*"
 autopep8 = "*"
+rope = "*"
 
 [packages]
 selenium = "*"
 requests = "*"
 pylava = "*"
+python-datauri = "*"
 
 [requires]
 python_version = "3.7"

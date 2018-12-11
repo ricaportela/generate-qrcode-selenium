@@ -5,7 +5,11 @@
 # central
 # central
 """ AutomGenerate Qrcode form website."""
+import logging
+import os
+import sys
 import time
+from datauri import DataURI
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium import webdriver
@@ -28,15 +32,15 @@ class GenerateQR():
 
         if browser == 'Chrome':
             options = Options()
+            options.add_argument('--no-sandbox')
+            options.add_argument('--window-size=1420,1080')
+            options.add_argument('--disable-gpu')
             if headless:
                 options.add_argument('--headless')
-                # options.add_argument("--start-maximized")
-                # options.add_argument("download.default_directory=C:/xisto")
-                options.add_argument('--ignore-certificate-errors')
-                options.add_argument("--test-type")
 
             self.driver = webdriver.Chrome(
-                executable_path="bin/chromedriver.exe", chrome_options=options)
+                executable_path="bin/chromedriver.exe", chrome_options=options, 
+                service_args=['--verbose', '--log-path=chromedriver.log'])
         else:
             if browser == 'Firefox':
                 options = FireFoxoptions()
@@ -46,7 +50,7 @@ class GenerateQR():
                     executable_path="bin/geckodriver", firefox_options=options)
 
     def main(self):
-        print("Opening qrcode page")
+        logging.info("opening browser")
         self.driver.set_page_load_timeout(930)
         try:
             self.driver.get(GenerateQR.URLs["url"])
@@ -55,15 +59,15 @@ class GenerateQR():
             return
         except ValueError:
             return
+
+    def parameters(self, numero):
         time.sleep(2)  # Let the user actually see something!
-        raw_xpath = '/html/body/div[2]/div/div[1]/ul/li[8]/a'
-        raw = self.driver.find_element_by_xpath(raw_xpath)
-        self.driver.execute_script("arguments[0].click()", raw)
+        self.newmethod555('/html/body/div[2]/div/div[1]/ul/li[8]/a')
 
         txtarea = self.driver.find_element_by_id('text')
         txtarea.clear()
         txtarea.send_keys('parametro de geração')
-        time.sleep(2)  # Let the user actually see something!
+        # time.sleep(2)  # Let the user actually see something!
 
         btn_tamanho_cor_xpath = '//*[@id="s1"]'
         btn_tamanho_cor = self.driver.find_element_by_xpath(
@@ -86,7 +90,7 @@ class GenerateQR():
         radius = self.driver.find_element_by_xpath(radius_xpath)
         self.driver.execute_script("arguments[0].click()", radius)
 
-        time.sleep(2)  # Let the user actually see something!
+        # time.sleep(2)  # Let the user actually see something!
 
         btn_mais_logotipo = self.driver.find_element_by_xpath('//*[@id="s2"]')
         self.driver.execute_script("arguments[0].click()", btn_mais_logotipo)
@@ -96,31 +100,43 @@ class GenerateQR():
         self.driver.execute_script("arguments[0].click()", photo)
 
         sel_photo = self.driver.find_element_by_id('image')
-        sel_photo_path = 'c:/xisto/tabelionato_xisto.jpeg'
+        sel_photo_path = 'C:/dev/generate-qrcode-selenium/img/tabelionato_xisto.jpeg'
         sel_photo.send_keys(sel_photo_path)
 
         dimension_xpath = '//*[@id="fontsize"]/label[4]'
         dimension = self.driver.find_element_by_xpath(dimension_xpath)
         self.driver.execute_script("arguments[0].click()", dimension)
 
-        time.sleep(2)  # Let the user actually see something!
+        # time.sleep(2)  # Let the user actually see something!
 
         # <input type="file" class="custom-file-input" id="image">
         # <img id="img-buffer" src="../dummy.png" style="display: none;">
-        time.sleep(5)  # Let the user actually see something!
+        # time.sleep(5)  # Let the user actually see something!
 
-        image_src =  self.driver.find_element_by_id('img-buffer')
-        image_src = "arguments[0].setAttribute('src','" + "images/teste2.png" + "')"
+        # image_src = self.driver.find_element_by_id('img-buffer')
+        # image_src = "arguments[0].setAttribute('src','" + \
+        #     "images/teste2.png" + "')"
 
-
-        param = "arguments[0].setAttribute('download','" + "teste2.png" + "')"
+        imagem = str(numero.strip() + '.png')
+        print(imagem)
+        param = "arguments[0].setAttribute('download','" + imagem + "')"
         baixa_qrcode = self.driver.find_element_by_id('dlbtn')
         self.driver.execute_script(param, baixa_qrcode)
-        baixa_qrcode.click()
 
         time.sleep(5)  # Let the user actually see something!
 
-        self.close()
+        baixa_qrcode.click()
+
+        url = baixa_qrcode.get_property('href')
+        uri = DataURI(url)
+        with open("c:/xisto/" + imagem, 'wb') as f:
+            f.write(uri.data)
+
+    def newmethod555(self, param_xpath):
+        element = self.driver.find_element_by_xpath(param_xpath)
+        self.driver.execute_script("arguments[0].click()", element)
+
+        # time.sleep(5)  # Let the user actually see something!
 
     def close(self):
         self.driver.quit()
