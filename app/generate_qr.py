@@ -117,7 +117,10 @@ class GenerateQR():
         # image_src = "arguments[0].setAttribute('src','" + \
         #     "images/teste2.png" + "')"
 
-        imagem = str(numero.strip() + '.png')
+        digits = [d for d in numero if d.isdigit()]
+        digit = ''.join(digits)
+        
+        imagem = str(digit.strip() + '.png')
         print(imagem)
         param = "arguments[0].setAttribute('download','" + imagem + "')"
         baixa_qrcode = self.driver.find_element_by_id('dlbtn')
@@ -129,7 +132,7 @@ class GenerateQR():
 
         url = baixa_qrcode.get_property('href')
         uri = DataURI(url)
-        with open("c:/xisto/" + imagem, 'wb') as f:
+        with open('c:\dev\generate-qrcode-selenium\qrcodes_imgs\' + imagem, 'wb') as f:
             f.write(uri.data)
 
     def newmethod555(self, param_xpath):
