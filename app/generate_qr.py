@@ -31,7 +31,7 @@ class GenerateQR():
             options = Options()
             options.add_argument('--no-sandbox')
             # options.add_argument('--window-size=1420,1080')
-            # options.add_argument('--disable-gpu')
+            options.add_argument('--disable-gpu')
             # options.add_argument('--disable-setuid-sandbox')
             # options.add_argument("--proxy-server='direct://'")
             # options.add_argument("--proxy-bypass-list=*")
@@ -99,6 +99,8 @@ class GenerateQR():
 
         baixa_qrcode = self.driver.find_element_by_id('dlbtn')
         self.driver.execute_script(param, baixa_qrcode)
+
+        self.driver.implicitly_wait(5) 
 
         baixa_qrcode.click()
 

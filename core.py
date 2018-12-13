@@ -9,7 +9,7 @@ if __name__ == "__main__":
     print('Inicio Geração das images com os QR codes...')
     start_time = time()
     qr = GenerateQR()
-    with open('numeros.txt') as f:
+    with open('input_data.txt') as f:
          for line in f:
              qr.parameters(line)
     end_time = time()
