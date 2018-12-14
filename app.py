@@ -5,16 +5,16 @@ from PIL import Image
 
 def create_qrcode(url, filename):
     qr = qrcode.QRCode(
-        version=1,
+        version=2,
         error_correction=qrcode.ERROR_CORRECT_H,
         box_size=10,
-        border=4,
+        border=2,
     )
     qr.add_data(url)
     qr.make(fit=True)
- 
     img = qr.make_image()
     img = img.convert("RGBA")
+    
     icon = Image.open('img/tabelionato_xisto.jpeg')
     w, h = img.size
     factor = 4
@@ -25,16 +25,22 @@ def create_qrcode(url, filename):
         icon_w = size_w
     if icon_h > size_h:
         icon_h = size_h
+    
     icon = icon.resize((icon_w, icon_h), Image.ANTIALIAS)
     w = int((w - icon_w) / 2)
     h = int((h - icon_h) / 2)
     icon = icon.convert("RGBA")
     newimg = Image.new("RGBA", (icon_w + 8, icon_h + 8), (255, 255, 255))
+   
     img.paste(newimg, (w-4, h-4), newimg)
- 
+    
     img.paste(icon, (w, h), icon)
-    img.save('qrcodes_imgs/' + imagem + '.bmp')
-
+    img.format ='BMP'
+    size = (200, 200) # Ajusta o tamanho para 200 pixels
+    img2 = img.resize(size, Image.ANTIALIAS)
+    img2.format = 'BMP'
+    
+    img2.save('qrcodes_imgs/' + imagem + '.bmp', 'bmp', quality=100)
 
 
 if __name__ == "__main__":
