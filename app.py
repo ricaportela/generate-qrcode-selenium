@@ -5,7 +5,7 @@ from PIL import Image
 
 def create_qrcode(url, filename):
     qr = qrcode.QRCode(
-        version=2,
+        version=1,
         error_correction=qrcode.ERROR_CORRECT_H,
         box_size=10,
         border=2,
@@ -33,14 +33,11 @@ def create_qrcode(url, filename):
     newimg = Image.new("RGBA", (icon_w + 8, icon_h + 8), (255, 255, 255))
    
     img.paste(newimg, (w-4, h-4), newimg)
-    
     img.paste(icon, (w, h), icon)
     img.format ='BMP'
-    size = (200, 200) # Ajusta o tamanho para 200 pixels
-    img2 = img.resize(size, Image.ANTIALIAS)
-    img2.format = 'BMP'
     
-    img2.save('qrcodes_imgs/' + imagem + '.bmp', 'bmp', quality=100)
+    qr_imagem = img.save('qr_imgs/' + imagem + '.bmp', 'bmp', quality=100)
+    return qr_imagem
 
 
 if __name__ == "__main__":
