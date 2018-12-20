@@ -3,6 +3,7 @@
 # Edit at https://www.gitignore.io/?templates=python
 # VS Code
 *.json
+*.bmp
 
 ### Python ###
 # Byte-compiled / optimized / DLL files
